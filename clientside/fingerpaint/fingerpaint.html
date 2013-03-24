@@ -4,45 +4,30 @@
     <title>Finger Painting</title>
     <link rel="stylesheet" href="css/fingerpaint.css" type="text/css" />
     <script src="../common/js/jquery-1.9.1.min.js"></script>
+    <script src="../common/js/nuimotion.js"></script>
     <script src="../common/js/speechrecognition.js"></script>
 
     <script src="js/paint.js"></script>
-    <script>
-        $(document).ready( function() {
-            paint = new Paint($("#canvas"));
-            speech = new SpeechRecognition();
-            speech.addCommand(["red", "green", "blue", "yellow", "purple", "orange", "black"], onChangeColor);
-            speech.start();
-            //onResize();
-        });
-
-        $(document).resize( function() {
-            onResize();
-        });
-
-        function onResize() {
-            $("#canvas").width( $(document).width() );
-            $("#canvas").height( $(document).height() );
-        }
-
-        function onChangeColor(data) {
-            console.log("set color: " + data.word);
-            $(".palette.selected").removeClass("selected");
-            $("#color-" + data.word).addClass("selected");
-            paint.setColor(data.word);
-
-        }
-    </script>
+    <script src="js/fingerpaint.js"></script>
 </head>
 
 <body>
-<div id="color-red" class="palette"></div>
-<div id="color-green" class="palette"></div>
-<div id="color-blue" class="palette"></div>
-<div id="color-yellow" class="palette"></div>
-<div id="color-purple" class="palette"></div>
-<div id="color-orange" class="palette"></div>
-<div id="color-black" class="palette"></div>
-<canvas id="canvas" />
+
+<div id="palette">
+    <div id="color-red" class="swatch"></div>
+    <div id="color-green" class="swatch"></div>
+    <div id="color-blue" class="swatch"></div>
+    <div id="color-yellow" class="swatch"></div>
+    <div id="color-purple" class="swatch"></div>
+    <div id="color-orange" class="swatch"></div>
+    <div id="color-black" class="swatch"></div>
+</div>
+<div id="speechinputresults"></div>
+
+<canvas id="canvas"></canvas>
+<div id="drawcursor" class="up"></div>
+<div id="erasercursor" class="up"></div>
+
+
 </body>
 </html>
