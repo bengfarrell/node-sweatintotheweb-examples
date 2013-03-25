@@ -37,7 +37,7 @@ nuimotion.context.on = function(name) {
 };
 
 function onUpdate() {
-    var hands = {"motion_update": s2web.getHands() };
+    var hands = {"motion_update": nuimotion.getJoints(Joints.LEFT_HAND, Joints.RIGHT_HAND) };
     for (var c in connections) {
         connections[c].sendUTF(JSON.stringify(hands));
     }

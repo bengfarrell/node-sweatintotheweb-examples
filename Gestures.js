@@ -1,27 +1,40 @@
-// EVENTS SENDER
+// Gestures
+// Generic Gestures Application
+// Turn on and off whatever you'd like to send on via web sockets
 
-var nui = require("nuimotion");
+var nuimotion = require("nuimotion");
+
+// Comment and uncomment whatever gestures you need to send on
+nuimotion.addGestureListener(Events.Gestures.Swipe.SWIPE, Events.Gestures.Swipe.types.right);
+nuimotion.addGestureListener(Events.Gestures.Swipe.SWIPE, Events.Gestures.Swipe.types.left);
+nuimotion.addGestureListener(Events.Gestures.Swipe.SWIPE, Events.Gestures.Swipe.types.up);
+nuimotion.addGestureListener(Events.Gestures.Swipe.SWIPE, Events.Gestures.Swipe.types.down);
+//nuimotion.addGestureListener(Events.Gestures.Wave.WAVE, Events.Gestures.Wave.types.left);
+//nuimotion.addGestureListener(Events.Gestures.Wave.WAVE, Events.Gestures.Wave.types.right);
+nuimotion.addGestureListener(Events.Gestures.Wave.WAVE, Events.Gestures.Wave.types.any);
+
 var WebSocketServer = require('websocket').server;
 var http = require('http');
 
 var connections = [];
 
-nui.context.on = function(name) {
+nuimotion.context.on = function(name) {
+    console.log(name)
     for (var c in connections) {
         switch (name) {
-            case Events.Gestures.Wave.WAVE:
+            case Events.Gestures.Wave.types.any:
                 connections[c].sendUTF('{ "gesture_event": "' + name + '" }');
                 break;
-            case Events.Gestures.Swipe.left:
+            case Events.Gestures.Swipe.types.left:
                 connections[c].sendUTF('{ "gesture_event": "' + name + '" }');
                 break;
-            case Events.Gestures.Swipe.right:
+            case Events.Gestures.Swipe.types.right:
                 connections[c].sendUTF('{ "gesture_event": "' + name + '" }');
                 break;
-            case Events.Gestures.Swipe.up:
+            case Events.Gestures.Swipe.types.up:
                 connections[c].sendUTF('{ "gesture_event": "' + name + '" }');
                 break;
-            case Events.Gestures.Swipe.down:
+            case Events.Gestures.Swipe.types.down:
                 connections[c].sendUTF('{ "gesture_event": "' + name + '" }');
                 break;
         }
@@ -30,7 +43,7 @@ nui.context.on = function(name) {
 };
 
 process.on('exit', function() {
-    nui.close();
+    nuimotion.close();
 });
 
 var server = http.createServer(function(request, response) {
@@ -53,4 +66,4 @@ wsServer.on('request', function(request) {
     });
 });
 
-nui.init();
+nuimotion.init();
