@@ -5,6 +5,10 @@ Usage and interaction examples for Sweatin' To the Web for Node.js.  Most, if no
 
 
 
+
+
+
+
 Generic Usage Examples
 ======================
 
@@ -35,6 +39,11 @@ Gesture listeners are added by calling addGestureListener(gesturecategory, gestu
 
 The following events are also dispatched: "NEW_USER", "USER_IS_VISIBLE", "USER_IS_OUT_OF_SCENE", "USER_IS_LOST", "SKELETON_STOPPED_TRACKING", "SKELETON_CALIBRATING",
 "SKELETON_TRACKING", "SKELETON_CALIBRATION_FAILED", "DEVICE_INITIALIZED", "DEVICE_ERROR"
+
+
+
+
+
 
 
 
