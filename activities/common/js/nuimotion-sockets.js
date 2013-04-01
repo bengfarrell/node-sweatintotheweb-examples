@@ -1,5 +1,6 @@
 // NuiMotion NodeJS Add-On Constants Reference
-// for Browser Applications
+// Proxy for direct NuiMotion plugin interaction through Websockets
+// for Browser Applications that can't communicate with Node/NuiMotion directly
 nuimotion = {};
 nuimotion.Joints = {};
 nuimotion.Joints.LEFT_HAND = "left_hand";
