@@ -48,12 +48,12 @@ nuimotion.init = function(host) {
     nuimotion._socket.onmessage = function (e) {
         var msg = JSON.parse(e.data);
         if (msg["skeleton"] && nuimotion.onSkeletonEventHandler) {
-            nuimotion.onSkeletonEventHandler.apply(this, [msg["skeleton"]]);
+            nuimotion.onSkeletonEventHandler.apply(this, [{skeleton: msg["skeleton"]}]);
         } else if (msg["gesture"] && nuimotion._gestureCallbackDict[msg["gesture"]] ) {
-            nuimotion._gestureCallbackDict[msg["gesture"]].apply(this, [msg["gesture"]]);
+            nuimotion._gestureCallbackDict[msg["gesture"]].apply(this, [{gesture: msg["gesture"]}]);
         } else if (msg["event"] && nuimotion._gestureCallbackDict[msg["event"]] ) {
             if (nuimotion._eventCallbackDict[msg["event"]]) {
-                nuimotion._eventCallbackDict[msg["event"]].apply(this, [msg["event"]]);
+                nuimotion._eventCallbackDict[msg["event"]].apply(this, [{event: msg["event"]}]);
             }
         }
     }

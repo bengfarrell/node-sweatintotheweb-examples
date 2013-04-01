@@ -6,9 +6,23 @@
     <script src="../common/js/jquery-1.9.1.min.js"></script>
     <script src="../common/js/nuimotion-sockets.js"></script>
     <script src="../common/js/speechrecognition.js"></script>
-
     <script src="js/paint.js"></script>
     <script src="js/fingerpaint-activity.js"></script>
+
+    <script>
+        $(document).ready( function() {
+            speech = true;
+            nuimotion.init("ws://localhost:8080");
+            nuimotion.onSkeletonEventHandler = onSkeletonUpdate;
+            nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.any, onGesture);
+            nuimotion.setJoints([
+                nuimotion.Joints.LEFT_HAND,
+                nuimotion.Joints.LEFT_SHOULDER,
+                nuimotion.Joints.RIGHT_HAND,
+                nuimotion.Joints.RIGHT_SHOULDER]);
+            init();
+        });
+    </script>
 </head>
 
 <body>

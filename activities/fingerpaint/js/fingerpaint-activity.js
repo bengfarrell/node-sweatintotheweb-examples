@@ -1,40 +1,30 @@
-$(document).ready( function() {
-    nuimotion.init("ws://localhost:8080");
-    nuimotion.onSkeletonEventHandler = onSkeletonUpdate;
-    nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.any, onGesture);
-    nuimotion.setJoints([
-        nuimotion.Joints.LEFT_HAND,
-        nuimotion.Joints.LEFT_SHOULDER,
-        nuimotion.Joints.RIGHT_HAND,
-        nuimotion.Joints.RIGHT_SHOULDER]);
-
-    $("#canvas").mousemove( function(event) {
-   //     $("#drawcursor").offset({top: event.pageY, left: event.pageX});
-    });
-
-    paint = new Paint($("#canvas"));
-    $("#color-red").addClass("selected");
-    paint.setColor("red");
-    speech = new SpeechRecognition();
-    speech.keepAlive = true;
-    speech.addListener(SpeechRecognition.Event.RESULTS, function(results) {
-        if (results.final == "") {
-            $("#speechinputresults").html("<strong>I'm hearing you say:</strong>" + results.interim)
-        } else {
-            $("#speechinputresults").html("<strong>You said:</strong>" + results.final)
-        }
-    });
-
-    speech.addCommand(["red", "green", "blue", "yellow", "purple", "orange", "black"], onChangeColor);
-    speech.addCommand(["clear", "erase", "start over"], onClearCanvasCommand);
-    speech.addCommand(["ross"], onBobRossifyCommand);
-    speech.start();
-    onResize();
-});
-
 $(document).resize( function() {
     onResize();
 });
+
+function init() {
+    paint = new Paint($("#canvas"));
+    $("#color-red").addClass("selected");
+    paint.setColor("red");
+
+    if (speech) {
+        speech = new SpeechRecognition();
+        speech.keepAlive = true;
+        speech.addListener(SpeechRecognition.Event.RESULTS, function(results) {
+            if (results.final == "") {
+                $("#speechinputresults").html("<strong>I'm hearing you say:</strong>" + results.interim)
+            } else {
+                $("#speechinputresults").html("<strong>You said:</strong>" + results.final)
+            }
+        });
+
+        speech.addCommand(["red", "green", "blue", "yellow", "purple", "orange", "black"], onChangeColor);
+        speech.addCommand(["clear", "erase", "start over"], onClearCanvasCommand);
+        speech.addCommand(["ross"], onBobRossifyCommand);
+        speech.start();
+    }
+    onResize();
+}
 
 function onResize() {
     paint.resizeCanvas($(document).width(), $(document).height());
@@ -59,13 +49,15 @@ function onChangeColor(data) {
 var isBrushDown = false;
 var isEraserDown = false;
 
-function onGesture(type) {
+function onGesture(data) {
+    type = data.gesture;
     if (type == nuimotion.Events.Gestures.Wave.types.any) {
         paint.clearAll();
     }
 }
 
-function onSkeletonUpdate(skeleton) {
+function onSkeletonUpdate(data) {
+    skeleton = data.skeleton;
     var left = toScreenCoordinates(skeleton[nuimotion.Joints.LEFT_HAND]);
     var right = toScreenCoordinates(skeleton[nuimotion.Joints.RIGHT_HAND]);
 

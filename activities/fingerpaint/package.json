@@ -5,7 +5,7 @@
   "main": "fingerpaint-activity-nwk.html",
   "window": {
     "toolbar": false,
-    "width": 660,
-    "height": 500
+    "width": 800,
+    "height": 600
   }
 }

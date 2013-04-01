@@ -2,15 +2,33 @@
 <html>
 <head>
     <title>Finger Painting</title>
+
+    <!-- Not so good for demo, since half the things I put in here are speech driven -->
+    <!-- Until Node Webkit supports speech, we outta luck -->
     <link rel="stylesheet" href="css/fingerpaint.css" type="text/css" />
     <script src="../common/js/jquery-1.9.1.min.js"></script>
-    <script src="../common/js/nuimotion.js"></script>
 
-    <!-- Awwwww, snap - speech recgnition isn't supported in NodeWebkit right now -->
-    <script src="../common/js/speechrecognition.js"></script>
+    <!-- Awwwww, snap - speech recgnition isn't supported in NodeWebkit right now
+    <script src="../common/js/speechrecognition.js"></script> -->
 
     <script src="js/paint.js"></script>
     <script src="js/fingerpaint-activity.js"></script>
+
+    <script>
+        $(document).ready( function() {
+            speech = false;
+            nuimotion = require("nuimotion");
+            nuimotion.init();
+            nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.any, onGesture);
+            nuimotion.startSkeletonListener([
+                nuimotion.Joints.LEFT_HAND,
+                nuimotion.Joints.LEFT_SHOULDER,
+                nuimotion.Joints.RIGHT_HAND,
+                nuimotion.Joints.RIGHT_SHOULDER], onSkeletonUpdate);
+
+            init();
+        });
+    </script>
 </head>
 
 <body>
