@@ -100,7 +100,7 @@ function SpeechRecognition() {
 
             for (var command in self._commands) {
                 for (var word in self._commands[command].words) {
-                    if (self._finalTranscript.indexOf(self._commands[command].words[word]) != -1) {
+                    if (self._finalTranscript.toLowerCase().indexOf(self._commands[command].words[word].toLowerCase()) != -1) {
                         // cut the command leaving the freeform words
                         var w = self._commands[command].words[word];
                         var ftransIndex = self._finalTranscript.indexOf(w);

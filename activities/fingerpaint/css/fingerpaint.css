@@ -64,6 +64,7 @@ body {
 
 #drawcursor {
     position: absolute;
+    border-radius: 5px;
     width: 20px;
     height: 20px;
     background-color: #666666;
@@ -76,10 +77,14 @@ body {
     background-color: #660000;
 }
 
-#drawcursor.down {
+#drawcursor.down, #erasercursor.down {
     opacity: 1;
 }
 
-#drawcursor.up {
+#drawcursor.up, #erasercursor.up {
     opacity: .25;
+}
+
+#bobross {
+    display: none;
 }

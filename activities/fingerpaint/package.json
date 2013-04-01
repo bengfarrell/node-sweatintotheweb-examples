@@ -1,0 +1,11 @@
+{
+  "name": "FingerPaint Activity",
+  "description": "Painting",
+  "version": "0.1",
+  "main": "fingerpaint-activity-nwk.html",
+  "window": {
+    "toolbar": false,
+    "width": 660,
+    "height": 500
+  }
+}

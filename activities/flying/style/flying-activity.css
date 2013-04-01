@@ -1,0 +1,75 @@
+#bird {
+    position: fixed;
+    bottom: 30px;
+    left: 250px;
+}
+
+#bird .body {
+    background-image: url('../images/bird-body-sprite.png');
+    background-size: 100% auto;
+    width: 70px;
+    height: 130px;
+    position: relative;
+}
+
+#bird.unhatched .body {
+    background-image: url('../images/egg.png');
+    height: 98px;
+}
+
+#bird.unhatched .wing {
+    display: none;
+}
+
+#bird.hatching {
+    animation: hatching-animation .25s ease-in-out infinite alternate;
+    -moz-animation: hatching-animation .25s ease-in-out infinite alternate;
+    -webkit-animation: hatching-animation .25s ease-in-out infinite alternate;
+}
+
+#bird .wing {
+    width: 16px;
+    height: 52px;
+    top: 60px;
+    background-image: url('../images/wing-sprite.png');
+    background-size: 100% auto;
+    position: absolute;
+
+    transform-origin: 50% 0%;
+    -ms-transform-origin: 50% 0%; /* IE 9 */
+    -webkit-transform-origin: 50% 0%; /* Safari and Chrome */
+    -moz-transform-origin: 50% 0%; /* Firefox */
+    -o-transform-origin: 50% 0% /* Opera */
+}
+
+#bird .wing.left {
+    left: 4px;
+}
+
+#bird .wing.right {
+    right: 4px;
+}
+
+@keyframes hatching-animation
+{
+    0%   { transform:scale(1) rotate(2deg); }
+    25%  { transform:scale(.93) rotate(-2deg); }
+    50%  { transform:scale(.95) rotate(1deg); }
+    100% { transform:scale(.97) rotate(3deg);}
+}
+
+@-moz-keyframes hatching-animation /* Firefox */
+{
+    0%   { -moz-transform:scale(1) rotate(2deg); }
+    25%  { -moz-transform:scale(.93) rotate(-2deg); }
+    50%  { -moz-transform:scale(.95) rotate(1deg); }
+    100% { -moz-transform:scale(.97) rotate(3deg);}
+}
+
+@-webkit-keyframes hatching-animation /* Safari and Chrome */
+{
+    0%   { -webkit-transform:scale(1) rotate(2deg); }
+    25%  { -webkit-transform:scale(.93) rotate(-2deg); }
+    50%  { -webkit-transform:scale(.95) rotate(1deg); }
+    100% { -webkit-transform:scale(.97) rotate(3deg); }
+}

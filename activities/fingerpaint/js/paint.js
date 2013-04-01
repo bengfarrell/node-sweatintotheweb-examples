@@ -55,6 +55,7 @@ function Paint(canvas) {
     }
 
     this.moveEraser = function(event) {
+        console.log("MOVE ERASER")
         if (self._isEraserDown) {
             self._context.beginPath();
             self._context.arc(event.pageX, event.pageY, 12, 0, 2 * Math.PI, false);
@@ -70,6 +71,10 @@ function Paint(canvas) {
             self._context.lineWidth = 5;
             self._context.stroke();
         }
+    }
+
+    this.bobrossify = function(img) {
+        self._context.drawImage($(img)[0],0,0);
     }
 
     this.constructor();

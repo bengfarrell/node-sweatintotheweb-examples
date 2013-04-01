@@ -1,0 +1,11 @@
+{
+  "name": "Flying Activity",
+  "description": "Flap your arms to fly!",
+  "version": "0.1",
+  "main": "flying-activity-nwk.html",
+  "window": {
+    "toolbar": false,
+    "width": 660,
+    "height": 500
+  }
+}
