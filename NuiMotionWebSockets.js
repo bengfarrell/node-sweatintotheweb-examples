@@ -31,23 +31,16 @@ function onSkeletonUpdate(skeleton) {
 
 /**
  * on general event (user/device/etc)
- * @param eventType
+ * @param event
  */
-function onEvent(eventType) {
-    console.log("Event: " + eventType);
-    for (var c in connections) {
-        connections[c].sendUTF('{ "event": "' + eventType + '" }');
+function onEvent(event) {
+    if (event.eventType == nuimotion.Events.GESTURE) {
+        console.log("Gesture: " + event.gestureType + " Hand: " + event.hand + " State: " + event.step);
+    } else {
+        console.log("Event: " + event.eventType);
     }
-}
-
-/**
- * on gesture event
- * @param gesture
- */
-function onGesture(gesture) {
-    console.log("Gesture: " + gesture);
     for (var c in connections) {
-        connections[c].sendUTF('{ "gesture": "' + gesture + '" }');
+        connections[c].sendUTF(JSON.stringify(event));
     }
 }
 
@@ -74,7 +67,7 @@ function onMessage(data) {
             case "addGesture":
                 console.log("Client has request to add gestures: " + message.data);
                 if (!nuimotion._gestureCallbackDict[message.data]) {
-                    nuimotion.addGesture(message.data, onGesture);
+                    nuimotion.addGesture(message.data, onEvent);
                 }
                 break;
         }
