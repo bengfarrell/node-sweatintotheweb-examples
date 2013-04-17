@@ -19,12 +19,13 @@ nuimotion.Joints.TORSO = "torso";
 nuimotion.Joints.HEAD = "head";
 nuimotion.Events = {};
 nuimotion.Events.Gestures = {};
+nuimotion.Events.Gestures.Progress = { start: "GESTURE_START", complete: "GESTURE_COMPLETE", cancelled: "GESTURE_CANCELLED" };
 nuimotion.Events.Gestures.Swipe = {};
 nuimotion.Events.Gestures.Swipe.SWIPE = "SWIPE_GESTURE";
 nuimotion.Events.Gestures.Swipe.types = {left: "SWIPE_LEFT", right: "SWIPE_RIGHT", up: "SWIPE_UP", down: "SWIPE_DOWN"};
 nuimotion.Events.Gestures.Wave = {};
 nuimotion.Events.Gestures.Wave.WAVE = "WAVE_GESTURE";
-nuimotion.Events.Gestures.Wave.types = {left: "WAVE_LEFT", right: "WAVE_RIGHT", any: "WAVE_ANY"};
+nuimotion.Events.Gestures.Wave.types = {hand: "WAVE_HAND"};
 nuimotion.Events.DEVICE_INITIALIZED = "DEVICE_INITIALIZED";
 nuimotion.Events.DEVICE_ERROR = "DEVICE_ERROR";
 nuimotion.Events.NEW_USER = "NEW_USER";
@@ -47,14 +48,13 @@ nuimotion.init = function(host) {
 
     nuimotion._socket.onmessage = function (e) {
         var msg = JSON.parse(e.data);
-        if (msg["skeleton"] && nuimotion.onSkeletonEventHandler) {
-            nuimotion.onSkeletonEventHandler.apply(this, [{skeleton: msg["skeleton"]}]);
-        } else if (msg["gesture"] && nuimotion._gestureCallbackDict[msg["gesture"]] ) {
-            nuimotion._gestureCallbackDict[msg["gesture"]].apply(this, [{gesture: msg["gesture"]}]);
-        } else if (msg["event"] && nuimotion._gestureCallbackDict[msg["event"]] ) {
-            if (nuimotion._eventCallbackDict[msg["event"]]) {
-                nuimotion._eventCallbackDict[msg["event"]].apply(this, [{event: msg["event"]}]);
-            }
+        console.log(msg)
+        if (msg.eventType == "SKELETON" && nuimotion.onSkeletonEventHandler) {
+            nuimotion.onSkeletonEventHandler.apply(this, [msg]);
+        } else if (msg.eventType == "GESTURE" && nuimotion._gestureCallbackDict[msg.gestureType] ) {
+            nuimotion._gestureCallbackDict[msg.gestureType].apply(this, [msg]);
+        } else if (nuimotion._eventCallbackDict[msg.eventType] ) {
+            nuimotion._eventCallbackDict[msg.eventType].apply(this, [msg]);
         }
     }
 
