@@ -18,10 +18,12 @@ nuimotion.addListener(
     onEvent );
 
 nuimotion.addGesture(
-    [ nuimotion.Events.Gestures.Swipe.types.left,
+    [ nuimotion.Events.Gestures.Swipe.types.up,
+        nuimotion.Events.Gestures.Swipe.types.down,
+        nuimotion.Events.Gestures.Swipe.types.left,
         nuimotion.Events.Gestures.Swipe.types.right,
-        nuimotion.Events.Gestures.Wave.types.any],
-    onGesture);
+        nuimotion.Events.Gestures.Wave.types.hand],
+    onEvent);
 nuimotion.init();
 
 /**
@@ -40,17 +42,13 @@ function onSkeletonUpdate(skeleton) {
 }
 
 /**
- * on general event (user/device/etc)
- * @param eventType
+ * on general event (user/device/gesture/etc)
+ * @param event
  */
-function onEvent(eventType) {
-    console.log(eventType);
-}
-
-/**
- * on gesture event
- * @param gesture
- */
-function onGesture(gesture) {
-    console.log(gesture)
+function onEvent(event) {
+    if (event.eventType == nuimotion.Events.GESTURE) {
+        console.log("Gesture: " + event.gestureType + " Hand: " + event.hand + " State: " + event.step);
+    } else {
+        console.log("Event: " + event.eventType);
+    }
 }
