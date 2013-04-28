@@ -19,7 +19,7 @@
             speech = false;
             nuimotion = require("nuimotion");
             nuimotion.init();
-            nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.any, onGesture);
+            nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.hand, onGesture);
             nuimotion.startSkeletonListener([
                 nuimotion.Joints.LEFT_HAND,
                 nuimotion.Joints.LEFT_SHOULDER,

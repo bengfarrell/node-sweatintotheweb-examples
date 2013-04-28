@@ -14,7 +14,7 @@
             speech = true;
             nuimotion.init("ws://localhost:8080");
             nuimotion.onSkeletonEventHandler = onSkeletonUpdate;
-            nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.any, onGesture);
+            nuimotion.addGesture(nuimotion.Events.Gestures.Wave.types.hand, onGesture);
             nuimotion.setJoints([
                 nuimotion.Joints.LEFT_HAND,
                 nuimotion.Joints.LEFT_SHOULDER,
