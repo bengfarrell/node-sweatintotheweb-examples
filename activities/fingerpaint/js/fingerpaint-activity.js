@@ -50,8 +50,8 @@ var isBrushDown = false;
 var isEraserDown = false;
 
 function onGesture(data) {
-    type = data.gesture;
-    if (type == nuimotion.Events.Gestures.Wave.types.any) {
+    if (data.gestureType == nuimotion.Events.Gestures.Wave.types.hand &&
+        data.step == nuimotion.Events.Gestures.Progress.complete) {
         paint.clearAll();
     }
 }
