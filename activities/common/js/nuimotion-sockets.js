@@ -48,8 +48,7 @@ nuimotion.init = function(host) {
 
     nuimotion._socket.onmessage = function (e) {
         var msg = JSON.parse(e.data);
-        console.log(msg)
-        if (msg.eventType == "SKELETON" && nuimotion.onSkeletonEventHandler) {
+        if (msg["skeleton"] && nuimotion.onSkeletonEventHandler) {
             nuimotion.onSkeletonEventHandler.apply(this, [msg]);
         } else if (msg.eventType == "GESTURE" && nuimotion._gestureCallbackDict[msg.gestureType] ) {
             nuimotion._gestureCallbackDict[msg.gestureType].apply(this, [msg]);
