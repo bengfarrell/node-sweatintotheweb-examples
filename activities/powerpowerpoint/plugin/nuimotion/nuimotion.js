@@ -1,6 +1,5 @@
 /**
- * Touch-based remote controller for your presentation courtesy 
- * of the folks at http://remotes.io
+ * NuiMotion over WebSockets
  */
 
 (function(window){
@@ -19,12 +18,22 @@
     onSwipeLeftEvent = function(event) {
         if (event.step == nuimotion.Events.Gestures.Progress.complete) {
             Reveal.right();
+            $(".reveal .controls .navigate-left").css({ "transform": "scale(1,1)" });
+        } else if (event.step == nuimotion.Events.Gestures.Progress.start) {
+            $(".reveal .controls .navigate-left").css({ "transform": "scale(2,2)" });
+        } else {
+            $(".reveal .controls .navigate-left").css({ "transform": "scale(1,1)" });
         }
     }
 
     onSwipeRightEvent = function(event) {
         if (event.step == nuimotion.Events.Gestures.Progress.complete) {
             Reveal.left();
+            $(".reveal .controls .navigate-right").css({ "transform": "scale(1,1)" });
+        } else if (event.step == nuimotion.Events.Gestures.Progress.start) {
+            $(".reveal .controls .navigate-right").css({ "transform": "scale(2,2)" });
+        } else {
+            $(".reveal .controls .navigate-right").css({ "transform": "scale(1,1)" });
         }
     }
 

@@ -4,9 +4,28 @@
     <title>Fly Away</title>
     <link rel="stylesheet" href="style/flying-activity.css" type="text/css" />
     <script src="../common/js/jquery-1.9.1.min.js"></script>
-    <script src="../common/js/nuimotion.js"></script>
+    <script src="../common/js/nuimotion-sockets.js"></script>
     <script src="js/birdSprite.js"></script>
     <script src="js/flying-activity.js"></script>
+
+
+    <script>
+        $(document).ready( function() {
+            nuimotion.init("ws://localhost:8080");
+            nuimotion.onSkeletonEventHandler = onSkeletonUpdate;
+
+            nuimotion.setJoints([
+                nuimotion.Joints.LEFT_SHOULDER,
+                nuimotion.Joints.RIGHT_SHOULDER]);
+
+            nuimotion.addListener([nuimotion.Events.NEW_USER,
+                    nuimotion.Events.USER_IS_VISIBLE,
+                    nuimotion.Events.SKELETON_TRACKING,
+                    nuimotion.Events.SKELETON_STOPPED_TRACKING,
+                    nuimotion.Events.USER_IS_LOST,
+                    nuimotion.Events.USER_IS_OUT_OF_SCENE], onEvent);
+        });
+    </script>
 </head>
 <body>
     <div id="rotationLeft"></div>

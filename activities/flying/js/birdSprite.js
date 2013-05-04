@@ -15,20 +15,15 @@ function BirdSprite(elem) {
     this._ground = $(elem).position().top;
 
     /** gravity */
-    this._gravity = 40;
+    this._gravity = 5;
 
     /**
      * update
      * @param message
      */
-    this.update = function(data) {
-        if (data["device_event"]) {
-            self._manageGraphicalState(data["device_event"]);
-            return;
-        }
-
+    this.updateSkeleton = function(data) {
         skl = data["skeleton"];
-        left = skl[Joints.LEFT_SHOULDER];
+        left = skl[nuimotion.Joints.LEFT_SHOULDER];
         if (left && left.active) {
             var diff = self._rotation.left - left.yRotation;
             if (diff < 0) { self._velocity.left += Math.abs(diff); }
@@ -36,7 +31,7 @@ function BirdSprite(elem) {
             $("#rotationLeft").html(left.yRotation);
             self._rotateSprite( $(self.spriteElement).find(".left.wing"), -left.yRotation - 90);
         }
-        right = skl[Joints.RIGHT_SHOULDER];
+        right = skl[nuimotion.Joints.RIGHT_SHOULDER];
         if (right && right.active) {
             var diff = self._rotation.right - right.yRotation;
             if (diff > 0) { self._velocity.right += Math.abs(diff); }
@@ -45,7 +40,7 @@ function BirdSprite(elem) {
             self._rotateSprite( $(self.spriteElement).find(".right.wing"), -right.yRotation + 90);
         }
 
-        self._velocity.left -= 10;
+        self._velocity.left -= 1;
         if (self._velocity.left < 0) { self._velocity.left = 0; }
         pos = $(self.spriteElement).offset();
         pos.top -= self._velocity.left;
@@ -86,25 +81,25 @@ function BirdSprite(elem) {
      * @param state
      * @private
      */
-    this._manageGraphicalState = function(state) {
+    this.updateState = function(state) {
         switch (state) {
-            case Events.NEW_USER:
-            case Events.USER_IS_VISIBLE:
+            case nuimotion.Events.NEW_USER:
+            case nuimotion.Events.USER_IS_VISIBLE:
                 $("#bird").addClass("hatching");
                 break;
 
-            case Events.SKELETON_TRACKING:
+            case nuimotion.Events.SKELETON_TRACKING:
                 $("#bird").removeClass("hatching");
                 $("#bird").removeClass("unhatched");
                 break;
 
-            case Events.SKELETON_STOPPED_TRACKING:
+            case nuimotion.Events.SKELETON_STOPPED_TRACKING:
                 $("#bird").addClass("hatching");
                 $("#bird").addClass("unhatched");
                 break;
 
-            case Events.USER_IS_LOST:
-            case Events.USER_IS_OUT_OF_SCENE:
+            case nuimotion.Events.USER_IS_LOST:
+            case nuimotion.Events.USER_IS_OUT_OF_SCENE:
                 $("#bird").removeClass("hatching");
                 $("#bird").addClass("unhatched");
 
