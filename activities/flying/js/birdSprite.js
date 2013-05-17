@@ -5,6 +5,10 @@ function BirdSprite(elem) {
     /** DOM element that represents the bird */
     this.spriteElement = elem;
 
+    this.left = $(self.spriteElement).find(".left.wing");
+
+    this.right = $(self.spriteElement).find(".right.wing");
+
     /** velocity */
     this._velocity = { right: 0, left: 0 };
 
@@ -15,7 +19,7 @@ function BirdSprite(elem) {
     this._ground = $(elem).position().top;
 
     /** gravity */
-    this._gravity = 5;
+    this._gravity = 1;
 
     /**
      * update
@@ -26,18 +30,18 @@ function BirdSprite(elem) {
         left = skl[nuimotion.Joints.LEFT_SHOULDER];
         if (left && left.active) {
             var diff = self._rotation.left - left.yRotation;
-            if (diff < 0) { self._velocity.left += Math.abs(diff); }
+            if (diff < 0) { self._velocity.left += Math.abs(diff)*.45; }
             self._rotation.left = left.yRotation;
-            $("#rotationLeft").html(left.yRotation);
-            self._rotateSprite( $(self.spriteElement).find(".left.wing"), -left.yRotation - 90);
+           // $("#rotationLeft").html(left.yRotation);
+           self._rotateSprite( self.left, -left.yRotation - 90);
         }
         right = skl[nuimotion.Joints.RIGHT_SHOULDER];
         if (right && right.active) {
             var diff = self._rotation.right - right.yRotation;
-            if (diff > 0) { self._velocity.right += Math.abs(diff); }
+            if (diff > 0) { self._velocity.right += Math.abs(diff)*.45; }
             self._rotation.right = -right.yRotation + 90;
-            $("#rotationRight").html(-right.yRotation);
-            self._rotateSprite( $(self.spriteElement).find(".right.wing"), -right.yRotation + 90);
+            //$("#rotationRight").html(-right.yRotation);
+            self._rotateSprite( self.right, -right.yRotation + 90);
         }
 
         self._velocity.left -= 1;
@@ -73,7 +77,7 @@ function BirdSprite(elem) {
      * @private
      */
     this._calculateGravity = function(angle) {
-        return self._gravity * (Math.abs(angle)/90) + self._gravity*.25;
+        return self._gravity * (Math.abs(angle)/90) + self._gravity*.15;
     }
 
     /**

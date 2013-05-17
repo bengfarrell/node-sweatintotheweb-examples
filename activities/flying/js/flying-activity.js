@@ -7,7 +7,8 @@ $(document).ready( function() {
  * @param data
  */
 function onSkeletonUpdate(data) {
-    birdSprite.updateSkeleton(data);
+    birdSprite.updateSkeleton(data
+    );
 }
 
 function onEvent(data) {
