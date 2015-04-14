@@ -66,7 +66,6 @@ function onSkeletonUpdate(data) {
         if (skeleton[nuimotion.Joints.LEFT_HAND].percentExtended > 93 &&
             skeleton[nuimotion.Joints.LEFT_SHOULDER].yRotation > -60 &&
             skeleton[nuimotion.Joints.LEFT_SHOULDER].yRotation < 40) {
-
             if (!isBrushDown) {
                 isBrushDown = true;
                 $("#drawcursor").removeClass("up");
@@ -113,7 +112,6 @@ function onSkeletonUpdate(data) {
 
 function toScreenCoordinates(coords) {
     if (!coords) { return {x:0, y:0, active: false}};
-
-    var centerScreen = { x: document.width/2, y: document.height/2 };
+    var centerScreen = { x: document.body.clientWidth/2, y: document.body.clientHeight/2 };
     return {x: centerScreen.x + coords.x, y: -(centerScreen.y + coords.y) + 600, active: coords.active };
 }
